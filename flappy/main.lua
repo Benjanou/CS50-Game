@@ -36,6 +36,7 @@ require 'StateMachine'
 require 'states/BaseState'
 require 'states/CountdownState'
 require 'states/PlayState'
+require 'states/PauseState'
 require 'states/ScoreState'
 require 'states/TitleScreenState'
 
@@ -63,6 +64,7 @@ local GROUND_SCROLL_SPEED = 60
 local BACKGROUND_LOOPING_POINT = 413
 
 function love.load()
+    if arg[#arg] == "-debug" then require("mobdebug").start() end
     -- initialize our nearest-neighbor filter
     love.graphics.setDefaultFilter('nearest', 'nearest')
 
@@ -106,7 +108,8 @@ function love.load()
         ['title'] = function() return TitleScreenState() end,
         ['countdown'] = function() return CountdownState() end,
         ['play'] = function() return PlayState() end,
-        ['score'] = function() return ScoreState() end
+        ['score'] = function() return ScoreState() end,
+        ['pause'] = function() return PauseState() end
     }
     gStateMachine:change('title')
 
